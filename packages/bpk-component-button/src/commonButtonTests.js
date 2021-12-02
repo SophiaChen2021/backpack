@@ -19,7 +19,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-const commonButtonTests = ButtonToTest => {
+const commonButtonTests = (ButtonToTest) => {
   describe('ButtonToTest', () => {
     it('should render correctly', () => {
       const { asFragment } = render(<ButtonToTest>My button</ButtonToTest>);
@@ -111,4 +111,6 @@ const commonButtonTests = ButtonToTest => {
   });
 };
 
+// We eslint ignore the next line as its used to frame up our button variants tests
+// eslint-disable-next-line jest/no-export
 export default commonButtonTests;

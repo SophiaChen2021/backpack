@@ -29,7 +29,7 @@ import { danger, fail, warn, markdown } from 'danger';
 
 const currentYear = new Date().getFullYear();
 // Applies to js, css, scss and sh files that are not located in dist or flow-typed folders.
-const shouldContainLicensingInformation = filePath =>
+const shouldContainLicensingInformation = (filePath) =>
   filePath.match(/\.(js|css|scss|sh)$/) &&
   !filePath.includes('dist/') &&
   !filePath.includes('flow-typed/');
@@ -41,9 +41,9 @@ const AVOID_EXACT_WORDS = [
 const createdFiles = danger.git.created_files;
 const modifiedFiles = danger.git.modified_files;
 const fileChanges = [...modifiedFiles, ...createdFiles];
-const markdownChanges = fileChanges.filter(path => path.endsWith('md'));
+const markdownChanges = fileChanges.filter((path) => path.endsWith('md'));
 
-const svgsChangedOrCreated = fileChanges.some(filePath =>
+const svgsChangedOrCreated = fileChanges.some((filePath) =>
   filePath.endsWith('svg'),
 );
 
@@ -55,7 +55,7 @@ if (svgsChangedOrCreated) {
     `);
 }
 
-const componentChangedOrCreated = fileChanges.some(filePath =>
+const componentChangedOrCreated = fileChanges.some((filePath) =>
   filePath.match(/packages\/bpk-component.+\/src\/.+\.js/),
 );
 
@@ -71,7 +71,7 @@ if (componentChangedOrCreated) {
 // If any of the packages have changed, the UNRELEASED log should have been updated.
 const unreleasedModified = includes(modifiedFiles, 'UNRELEASED.md');
 const packagesModified = fileChanges.some(
-  filePath => filePath.startsWith('packages/') && !filePath.endsWith('.md'),
+  (filePath) => filePath.startsWith('packages/') && !filePath.endsWith('.md'),
 );
 if (packagesModified && !unreleasedModified) {
   warn(
@@ -81,13 +81,13 @@ if (packagesModified && !unreleasedModified) {
 
 // If source files have changed, the snapshots should have been updated.
 const componentSourceFilesModified = fileChanges.some(
-  filePath =>
+  (filePath) =>
     // packages/(one or more chars)/src/(one or more chars).js
     filePath.match(/packages\/.*bpk-component.+\/src\/.+\.js/) &&
     !filePath.includes('-test.'),
 );
 
-const snapshotsModified = fileChanges.some(filePath =>
+const snapshotsModified = fileChanges.some((filePath) =>
   filePath.endsWith('.js.snap'),
 );
 
@@ -98,7 +98,7 @@ if (componentSourceFilesModified && !snapshotsModified) {
 }
 
 // New files should include the Backpack license heading.
-const unlicensedFiles = createdFiles.filter(filePath => {
+const unlicensedFiles = createdFiles.filter((filePath) => {
   if (shouldContainLicensingInformation(filePath)) {
     const fileContent = fs.readFileSync(filePath);
     return !fileContent.includes(
@@ -116,7 +116,7 @@ if (unlicensedFiles.length > 0) {
 }
 
 // Updated files should include the latest year in licensing header.
-const outdatedLicenses = fileChanges.filter(filePath => {
+const outdatedLicenses = fileChanges.filter((filePath) => {
   if (
     shouldContainLicensingInformation(filePath) &&
     !unlicensedFiles.includes(filePath)
@@ -137,7 +137,7 @@ if (outdatedLicenses.length > 0) {
 }
 
 const nonModuleCssFiles = fileChanges.filter(
-  filePath =>
+  (filePath) =>
     filePath.match(/bpk-component/) &&
     filePath.match(/\.s?css/) &&
     !filePath.match(/\.module\.s?css/),
@@ -150,14 +150,14 @@ if (nonModuleCssFiles.length) {
   );
 }
 
-markdownChanges.forEach(path => {
+markdownChanges.forEach((path) => {
   const fileContent = fs.readFileSync(path);
 
   fileContent
     .toString()
     .split(/\r?\n/)
     .forEach((line, lineIndex) => {
-      AVOID_EXACT_WORDS.forEach(phrase => {
+      AVOID_EXACT_WORDS.forEach((phrase) => {
         if (line.includes(phrase.word)) {
           warn(`${phrase.reason} on line ${lineIndex + 1} in ${path}`);
         }

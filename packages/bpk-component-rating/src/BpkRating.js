@@ -34,14 +34,12 @@ const getClassName = cssModules(STYLES);
 const MEDIUM_RATING_THRESHOLD = 0.6;
 const HIGH_RATING_THRESHOLD = 0.8;
 
-const getMinValue = () => {
+const getMinValue = () =>
   // Currently the min value is zero no matter what scale is used.
   // If this ever changes, this function should be changed to return
   // different values based on the rating scale.
-  return 0;
-};
-
-const getMaxValue = ratingScale => {
+  0;
+const getMaxValue = (ratingScale) => {
   switch (ratingScale) {
     case RATING_SCALES.zeroToFive:
       return 5;
@@ -50,13 +48,11 @@ const getMaxValue = ratingScale => {
   }
 };
 
-const getMediumRatingThreshold = ratingScale => {
-  return getMaxValue(ratingScale) * MEDIUM_RATING_THRESHOLD;
-};
+const getMediumRatingThreshold = (ratingScale) =>
+  getMaxValue(ratingScale) * MEDIUM_RATING_THRESHOLD;
 
-const getHighRatingThreshold = ratingScale => {
-  return getMaxValue(ratingScale) * HIGH_RATING_THRESHOLD;
-};
+const getHighRatingThreshold = (ratingScale) =>
+  getMaxValue(ratingScale) * HIGH_RATING_THRESHOLD;
 
 export type Props = {
   ariaLabel: string,

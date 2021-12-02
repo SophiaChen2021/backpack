@@ -27,24 +27,22 @@ import BpkMobileScrollContainer from './index';
 
 const getClassName = cssModules(STYLES);
 
-const ScrollExampleBlock = () => {
-  return (
-    <div className={getClassName('bpk-scroll-block')}>
-      {new Array(10).fill().map((props, index) => (
-        <div
-          // eslint-disable-next-line react/no-array-index-key
-          key={index}
-          className={getClassName(
-            'bpk-scroll-block__item',
-            index % 2 === 0 && 'bpk-scroll-block__item--alternate',
-          )}
-        >
-          {index}
-        </div>
-      ))}
-    </div>
-  );
-};
+const ScrollExampleBlock = () => (
+  <div className={getClassName('bpk-scroll-block')}>
+    {new Array(10).fill().map((props, index) => (
+      <div
+        // eslint-disable-next-line react/no-array-index-key
+        key={index}
+        className={getClassName(
+          'bpk-scroll-block__item',
+          index % 2 === 0 && 'bpk-scroll-block__item--alternate',
+        )}
+      >
+        {index}
+      </div>
+    ))}
+  </div>
+);
 
 const DefaultExample = () => (
   <BpkMobileScrollContainer>
